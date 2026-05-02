@@ -1,0 +1,648 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Sameer Bhattarai</title>
+<meta name="description" content="Sameer Bhattarai portfolio — floating notebook interface." />
+<style>
+:root{
+  --paper:#fffdd0;
+  --ink:#15130e;
+  --line:rgba(72,94,112,.26);
+  --margin:rgba(180,62,48,.27);
+  --paper-width:min(680px,88vw);
+  --paper-height:min(850px,84vh);
+  --text-left:102px;
+  --right-pad:54px;
+  --text-top:160px;
+  --line-h:28px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;overflow:hidden;background:#03050b}
+body{
+  font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+}
+.space-site{
+  height:100vh;
+  height:100dvh;
+  overflow:hidden;
+  position:relative;
+  color:var(--ink);
+  background:
+    radial-gradient(circle at 50% 12%,rgba(74,101,143,.18),transparent 34%),
+    radial-gradient(circle at 12% 72%,rgba(107,88,62,.12),transparent 30%),
+    #03050b;
+}
+.stars,.stars:before,.stars:after{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background-repeat:repeat;
+}
+.stars{
+  background-image:
+    radial-gradient(circle,rgba(255,255,255,.82) 0 1px,transparent 1.3px),
+    radial-gradient(circle,rgba(185,210,255,.46) 0 1px,transparent 1.4px);
+  background-size:140px 120px,260px 210px;
+  background-position:10px 20px,80px 40px;
+  opacity:.78;
+}
+.stars:before{
+  content:"";
+  background-image:radial-gradient(circle,rgba(255,255,255,.52) 0 1px,transparent 1.3px);
+  background-size:330px 260px;
+  background-position:42px 92px;
+  opacity:.7;
+}
+.stars:after{
+  content:"";
+  background-image:radial-gradient(circle,rgba(155,184,255,.34) 0 1px,transparent 1.5px);
+  background-size:520px 400px;
+  background-position:170px 130px;
+  opacity:.75;
+}
+.stage{
+  position:fixed;
+  inset:0;
+  z-index:10;
+  height:100vh;
+  height:100dvh;
+  display:grid;
+  place-items:center;
+  padding:20px;
+  perspective:1400px;
+}
+.paper-wrap{
+  position:relative;
+  width:var(--paper-width);
+  height:var(--paper-height);
+  filter:drop-shadow(0 32px 36px rgba(0,0,0,.58)) drop-shadow(0 0 58px rgba(255,239,178,.06));
+  animation:float-paper 6.2s ease-in-out infinite;
+}
+.paper-wrap:before{
+  content:"";
+  position:absolute;
+  inset:4% 4% -1% 4%;
+  border-radius:32px;
+  background:rgba(0,0,0,.4);
+  filter:blur(30px);
+  transform:translateY(28px) scaleX(.9);
+  opacity:.65;
+  animation:living-shadow 6.2s ease-in-out infinite;
+}
+@keyframes float-paper{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes living-shadow{0%,100%{transform:translateY(30px) scaleX(.9);opacity:.58}50%{transform:translateY(38px) scaleX(.86);opacity:.45}}
+.paper{
+  position:relative;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  border-radius:4px 4px 10px 10px;
+  background:
+    linear-gradient(90deg,transparent 0 73px,var(--margin) 74px 75px,transparent 76px),
+    repeating-linear-gradient(180deg,transparent 0 27px,var(--line) 28px,transparent 29px),
+    radial-gradient(circle at 18% 6%,rgba(98,67,20,.10),transparent 23%),
+    radial-gradient(circle at 88% 80%,rgba(91,50,18,.08),transparent 28%),
+    linear-gradient(105deg,rgba(255,255,255,.38),transparent 22%,rgba(136,87,25,.07) 100%),
+    var(--paper);
+  box-shadow:
+    inset 0 0 0 1px rgba(80,54,20,.2),
+    inset 20px 0 42px rgba(98,62,16,.08),
+    inset -12px 0 26px rgba(70,42,13,.08);
+}
+.paper:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background-image:
+    radial-gradient(circle at 11% 17%,rgba(60,38,10,.12) 0 1px,transparent 1.4px),
+    radial-gradient(circle at 74% 39%,rgba(60,38,10,.08) 0 1px,transparent 1.3px),
+    radial-gradient(circle at 35% 87%,rgba(255,255,255,.3) 0 1px,transparent 1.4px);
+  background-size:24px 28px,31px 37px,19px 23px;
+  mix-blend-mode:multiply;
+  opacity:.45;
+}
+.paper:after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:-1px;
+  height:18px;
+  background:linear-gradient(180deg,transparent,rgba(70,38,12,.12));
+  clip-path:polygon(0 35%,7% 48%,15% 38%,22% 54%,31% 42%,42% 60%,54% 45%,64% 58%,76% 43%,86% 55%,100% 39%,100% 100%,0 100%);
+  opacity:.76;
+}
+.torn-top{
+  position:absolute;
+  z-index:8;
+  top:-1px;
+  left:0;
+  right:0;
+  height:68px;
+  background:linear-gradient(180deg,rgba(255,253,208,.96),rgba(255,253,208,.72) 68%,transparent);
+  filter:drop-shadow(0 5px 5px rgba(41,24,5,.12));
+}
+.torn-top:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg,rgba(91,51,12,.18),transparent 36%);
+  clip-path:polygon(0 0,7% 6px,13% 0,20% 7px,27% 2px,34% 8px,41% 1px,49% 7px,57% 0,65% 8px,72% 1px,80% 7px,88% 0,100% 5px,100% 54px,0 54px);
+}
+.spiral-cut{position:absolute;top:10px;width:28px;height:44px}
+.hole{
+  position:absolute;
+  left:4px;
+  top:7px;
+  width:20px;
+  height:20px;
+  border-radius:50%;
+  background:radial-gradient(circle at 42% 42%,#020207 0 48%,#17150f 62%,rgba(62,40,9,.38) 68%,transparent 70%);
+  box-shadow:inset 0 2px 3px rgba(255,255,255,.12),0 2px 2px rgba(0,0,0,.35);
+}
+.tear{position:absolute;top:0;width:12px;height:24px;background:rgba(75,43,10,.12);filter:blur(.2px)}
+.tear-left{left:3px;clip-path:polygon(40% 0,100% 0,68% 100%,0 78%)}
+.tear-right{right:3px;clip-path:polygon(0 0,62% 0,100% 82%,23% 100%)}
+.paper-meta{
+  position:absolute;
+  z-index:10;
+  top:72px;
+  left:98px;
+  right:58px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  pointer-events:none;
+}
+.meta-stamp{
+  color:rgba(45,38,27,.22);
+  font-size:10px;
+  line-height:1;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  white-space:nowrap;
+  text-shadow:0 .4px 0 rgba(255,255,255,.14),.35px .5px 0 rgba(88,56,21,.07);
+  user-select:none;
+}
+.nav-row{
+  position:absolute;
+  z-index:11;
+  top:98px;
+  left:104px;
+  right:86px;
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:14px;
+  align-items:center;
+}
+.nav-button{
+  display:grid;
+  place-items:center;
+  gap:3px;
+  border:0;
+  background:transparent;
+  color:rgba(16,14,10,.95);
+  cursor:pointer;
+  padding:3px;
+  transform:rotate(var(--tilt));
+  transition:transform .18s ease;
+}
+.nav-button:hover{transform:rotate(var(--tilt)) translateY(-2px) scale(1.04)}
+.nav-label{
+  font-size:8px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  opacity:0;
+  transform:translateY(-2px);
+  transition:opacity .18s ease,transform .18s ease;
+}
+.nav-button:hover .nav-label,.nav-button.is-active .nav-label{opacity:.55;transform:translateY(0)}
+.doodle-icon{width:34px;height:34px;overflow:visible}
+.doodle-icon path{fill:none;stroke-linecap:round;stroke-linejoin:round}
+.ink-depth{stroke:rgba(91,55,18,.22);stroke-width:2.35;transform:translate(.65px,.95px)}
+.ink-main{stroke:currentColor;stroke-width:1.65;filter:url(#ink-wobble)}
+.active-stroke{stroke-width:2.15}
+.copy-layer{
+  position:absolute;
+  z-index:6;
+  left:var(--text-left);
+  right:var(--right-pad);
+  top:0;
+  bottom:0;
+  pointer-events:none;
+}
+.copy-line{
+  position:absolute;
+  left:0;
+  right:0;
+  min-height:var(--line-h);
+  color:rgba(18,16,12,.92);
+  font-size:clamp(12px,1.35vw,17px);
+  line-height:var(--line-h);
+  letter-spacing:-.03em;
+  text-shadow:
+    .35px .45px 0 rgba(255,255,255,.18),
+    .85px .95px 0 rgba(92,57,20,.15),
+    0 .7px 1.2px rgba(0,0,0,.08);
+  white-space:nowrap;
+  will-change:transform;
+  backface-visibility:hidden;
+}
+.copy-line:nth-child(1),.copy-line:nth-child(17){
+  mask-image:linear-gradient(180deg,transparent,black 35%,black 70%,transparent);
+}
+.copy-heading-first{
+  font-weight:800;
+  font-size:clamp(12px,1.05vw,14px);
+  letter-spacing:.12em;
+}
+.copy-heading-title{
+  font-size:clamp(24px,3.6vw,42px);
+  font-weight:800;
+  letter-spacing:-.07em;
+  line-height:var(--line-h);
+}
+.copy-sub{color:rgba(18,16,12,.68);font-weight:700}
+.copy-note{color:rgba(18,16,12,.46);font-size:clamp(11px,1.05vw,14px)}
+.portrait-inset{
+  position:absolute;
+  z-index:7;
+  right:54px;
+  top:322px;
+  width:176px;
+  aspect-ratio:1/1;
+  padding:8px;
+  border-radius:20px;
+  background:rgba(255,253,208,.48);
+  border:1px solid rgba(73,48,17,.16);
+  box-shadow:0 11px 20px rgba(56,34,8,.16),inset 0 0 0 1px rgba(255,255,255,.22);
+  transform:rotate(1deg);
+  pointer-events:none;
+  overflow:hidden;
+}
+.portrait-inset:before{
+  content:"";
+  position:absolute;
+  inset:5px;
+  z-index:2;
+  border-radius:15px;
+  box-shadow:inset 0 0 18px rgba(255,253,208,.38),inset 0 0 0 1px rgba(71,48,19,.08);
+  pointer-events:none;
+}
+.portrait-inset:after{
+  content:"";
+  position:absolute;
+  left:16px;
+  right:16px;
+  bottom:8px;
+  height:18px;
+  border-radius:999px;
+  background:rgba(46,28,9,.18);
+  filter:blur(12px);
+  transform:translateY(10px);
+  pointer-events:none;
+}
+.portrait-inset img{
+  position:relative;
+  z-index:1;
+  width:100%;
+  height:100%;
+  display:block;
+  border-radius:14px;
+  object-fit:cover;
+  opacity:.94;
+  filter:saturate(.96) contrast(.98) sepia(.08);
+  mix-blend-mode:multiply;
+}
+.portrait-fallback{
+  position:relative;
+  z-index:1;
+  width:100%;
+  height:100%;
+  display:grid;
+  place-items:center;
+  border-radius:14px;
+  background:rgba(255,248,214,.72);
+  color:rgba(18,16,12,.45);
+  font-size:12px;
+  text-align:center;
+}
+.scroll-hint{
+  position:fixed;
+  left:50%;
+  bottom:18px;
+  z-index:20;
+  transform:translateX(-50%);
+  color:rgba(255,255,255,.58);
+  font-size:11px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  pointer-events:none;
+}
+.progress-rail{
+  position:fixed;
+  right:22px;
+  top:50%;
+  z-index:21;
+  width:2px;
+  height:160px;
+  transform:translateY(-50%);
+  background:rgba(255,255,255,.12);
+  border-radius:100px;
+  overflow:hidden;
+}
+.progress-fill{
+  position:absolute;
+  left:0;
+  right:0;
+  top:0;
+  background:rgba(255,253,208,.82);
+  border-radius:100px;
+  transform-origin:top;
+}
+.section-ghosts{
+  position:fixed;
+  left:22px;
+  top:50%;
+  z-index:21;
+  transform:translateY(-50%);
+  display:grid;
+  gap:10px;
+  color:rgba(255,255,255,.42);
+  font-size:10px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+}
+.ghost-dot{display:flex;align-items:center;gap:8px}
+.ghost-dot:before{
+  content:"";
+  width:5px;
+  height:5px;
+  border-radius:99px;
+  background:rgba(255,255,255,.25);
+}
+.ghost-dot.active{color:rgba(255,253,208,.88)}
+.ghost-dot.active:before{
+  background:rgba(255,253,208,.9);
+  box-shadow:0 0 12px rgba(255,253,208,.55);
+}
+.tab-scroll-note{
+  position:fixed;
+  right:22px;
+  bottom:22px;
+  z-index:21;
+  color:rgba(255,255,255,.42);
+  font-size:10px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  text-align:right;
+}
+@media(max-width:760px){
+  :root{
+    --paper-width:94vw;
+    --paper-height:82vh;
+    --text-left:88px;
+    --right-pad:32px;
+  }
+  .stage{padding:12px}
+  .paper-meta{left:88px;right:30px;top:72px}
+  .meta-stamp{font-size:9px;letter-spacing:.09em}
+  .nav-row{left:82px;right:42px;top:96px;gap:6px}
+  .doodle-icon{width:28px;height:28px}
+  .portrait-inset{width:118px;right:30px;top:338px;border-radius:16px;padding:6px}
+  .copy-line{font-size:12px}
+  .copy-heading-title{font-size:24px}
+  .section-ghosts,.progress-rail,.tab-scroll-note{display:none}
+}
+</style>
+</head>
+<body>
+<main class="space-site">
+  <svg width="0" height="0" aria-hidden="true">
+    <filter id="ink-wobble">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" result="noise"></feTurbulence>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="0.34"></feDisplacementMap>
+    </filter>
+  </svg>
+
+  <div class="stars"></div>
+  <div class="section-ghosts" id="ghosts" aria-hidden="true"></div>
+  <div class="progress-rail" aria-hidden="true"><div class="progress-fill" id="progress"></div></div>
+
+  <section class="stage" aria-label="Floating notebook portfolio">
+    <div class="paper-wrap">
+      <article class="paper">
+        <div class="torn-top" id="torn"></div>
+        <div class="paper-meta" aria-hidden="true">
+          <span class="meta-stamp">Sameer Bhattarai</span>
+          <span class="meta-stamp" id="date"></span>
+        </div>
+        <nav class="nav-row" id="nav" aria-label="Notebook navigation"></nav>
+        <div class="copy-layer" id="copy" aria-live="polite"></div>
+        <aside class="portrait-inset" id="portrait" aria-label="Stylized portrait of Sameer Bhattarai">
+          <img src="file.svg" alt="Stylized portrait of Sameer Bhattarai" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'portrait-fallback',textContent:'upload file.svg'})" />
+        </aside>
+      </article>
+    </div>
+  </section>
+
+  <div class="scroll-hint">click icons to switch / scroll to read this tab</div>
+  <div class="tab-scroll-note" id="note"></div>
+</main>
+
+<script>
+const NAV=[
+  ['home','Home','home'],
+  ['about','About','person'],
+  ['work','Work','work'],
+  ['notes','Notes','notes'],
+  ['contact','Contact','mail']
+];
+
+const SECTIONS={
+  home:{
+    kicker:'HOME',
+    title:'Sameer Bhattarai',
+    subtitle:'Floating notebook portfolio / draft',
+    body:[
+      'A single page held still in space. The paper does not chase the scroll. Only the writing moves, line by line, behaving like it was typeset for this notebook and nowhere else.',
+      'This page is the landing note. It can introduce the whole site softly, like the first page of a notebook someone did not fully intend to show you.',
+      'The icons above are the only doors. Scroll simply reads deeper inside the current door. No accidental teleporting to About while you are still trying to understand Home.',
+      'Placeholder for now: this will later become the first impression, a short line about finance, systems, curiosity, and the strange comfort of ordered paper in a dark sky.'
+    ],
+    sideNote:'Pinned page. Click icons to switch tabs. Scroll to read within tab.'
+  },
+  about:{
+    kicker:'ABOUT',
+    title:'A page for the person, not just the profile.',
+    subtitle:'Placeholder identity copy',
+    body:[
+      'This section will become the short human paragraph: who I am, what I notice, and why finance, systems, learning, and useful tools keep pulling me into the same orbit.',
+      'It should not read like a CV pasted onto paper. It should feel like a clean statement of taste, discipline, curiosity, and the kind of problems I naturally start arranging in my head.',
+      'Possible real direction: ACCA student, finance trainee, automation-minded, Nepal-based, interested in systems that make messy work traceable and less manually haunted.',
+      'This area can also include one or two small facts, but not too many. The page should still breathe. Empty ruled lines are part of the design, not wasted space.'
+    ],
+    sideNote:'Replace with real about copy later.'
+  },
+  work:{
+    kicker:'WORK',
+    title:'Work that should sit cleanly on paper.',
+    subtitle:'Experience / skills / proof',
+    body:[
+      'Finance operations, spreadsheets, reconciliations, reporting, automation, and practical systems. No decorative project fog yet. This is placeholder text until real evidence arrives.',
+      'The final version can hold Pathao Nepal, ACCA, BBS, Excel, Tally, EZ Billing, VAT return support, reconciliation work, and small automation habits in a clean notebook rhythm.',
+      'Instead of big glossy cards, this page should read like useful entries: what I handled, what tools I used, what became cleaner, what kind of responsibility it shows.',
+      'The Work tab can become the most employer-friendly page without becoming boring. We keep the paper weird, but the evidence sharp.'
+    ],
+    sideNote:'Keep it grounded. No invented projects.'
+  },
+  notes:{
+    kicker:'NOTES',
+    title:'Loose observations, kept clean.',
+    subtitle:'Thinking archive',
+    body:[
+      'A notes section can carry the stranger side of the portfolio: ideas about Nepal, software friction, accounting, free will, markets, design, politics, and all the tiny systems hiding in daily life.',
+      'This is where the portfolio can stop being a static identity card and become a living margin. Short essays, rough ideas, questions, and experiments can live here later.',
+      'The tone should be observant, not influencer-noisy. Like someone pressed a thought into paper before it escaped into the algorithmic soup.',
+      'This may become the signature section because most people show what they did. Fewer people show how they notice.'
+    ],
+    sideNote:'This can become the signature section.'
+  },
+  contact:{
+    kicker:'CONTACT',
+    title:'Leave a signal on the paper.',
+    subtitle:'Contact placeholder',
+    body:[
+      'Email, LinkedIn, GitHub, or domain links can live here. The icons, name stamp, and date stamp stay locked while this text scrolls into place between the notebook lines.',
+      'The final page should stay quiet: one email, one domain, maybe LinkedIn and GitHub. No carnival booth of buttons. Just enough doors to reach me.',
+      'A small contact sentence can make it human: open to finance roles, automation work, internship opportunities, research-heavy projects, and conversations with a real problem at the center.',
+      'The printed marks above are not content. They are the paper remembering whose notebook this is and when the page was opened.'
+    ],
+    sideNote:'Sameer Bhattarai / Nepal'
+  }
+};
+
+const ICON={
+  home:['M5 12.2 12 6l7 6.2','M7.2 11.4V19h9.6v-7.6','M10.2 19v-4.7h3.6V19'],
+  person:['M12 11.2a3.4 3.4 0 1 0 0-6.8 3.4 3.4 0 0 0 0 6.8z','M5.8 19.2c.8-4.1 3.1-6.2 6.2-6.2s5.4 2.1 6.2 6.2'],
+  work:['M5.3 6.4h13.4v11.8H5.3z','M8.2 16.8l3.3-4.1 2.3 2.5 1.6-2.1 2.8 3.7','M9.2 9.4h.1'],
+  notes:['M7 4.8h10v14.4H7z','M9.2 8h5.7M9.2 11.1h5.7M9.2 14.2h4.2','M17 4.8l1.4 1.4'],
+  mail:['M5.2 7.4h13.6v9.2H5.2z','M5.4 8l6.6 5 6.6-5']
+};
+
+const clamp=(v,a,b)=>Math.min(Math.max(v,a),b);
+let active='home';
+let offsets=Object.fromEntries(NAV.map(n=>[n[0],0]));
+let targets=Object.fromEntries(NAV.map(n=>[n[0],0]));
+let raf=null;
+
+function wrap(text,max){
+  const words=String(text||'').replace(/\s+/g,' ').trim().split(' ').filter(Boolean);
+  const out=[];
+  let current='';
+  for(const word of words){
+    const next=current?current+' '+word:word;
+    if(next.length>max&&current){out.push(current);current=word}else current=next;
+  }
+  if(current) out.push(current);
+  return out;
+}
+
+function lines(section){
+  const limit=section===SECTIONS.about?31:48;
+  let body=[];
+  section.body.forEach((paragraph,index)=>{
+    const wrapped=wrap(paragraph,limit);
+    body=body.concat(index?[''].concat(wrapped):wrapped);
+  });
+  return ['✶ '+section.kicker,section.title,section.subtitle,''].concat(body,['','// '+section.sideNote]);
+}
+
+function maxOffset(){
+  return Math.max(lines(SECTIONS[active]).length-16,0);
+}
+
+function renderTorn(){
+  const torn=document.getElementById('torn');
+  torn.innerHTML='';
+  for(let i=0;i<15;i++){
+    torn.insertAdjacentHTML('beforeend',`<div class="spiral-cut" style="left:${42+i*38}px"><span class="hole"></span><span class="tear tear-left"></span><span class="tear tear-right"></span></div>`);
+  }
+}
+
+function iconSvg(name,isActive){
+  return `<svg class="doodle-icon" viewBox="0 0 24 24" aria-hidden="true">${(ICON[name]||ICON.home).map(d=>`<g><path d="${d}" class="ink-depth"></path><path d="${d}" class="ink-main ${isActive?'active-stroke':''}"></path></g>`).join('')}</svg>`;
+}
+
+function renderNav(){
+  document.getElementById('nav').innerHTML=NAV.map((item,index)=>`<button class="nav-button ${item[0]===active?'is-active':''}" style="--tilt:${[-2,1.5,-1,1,-1.8][index]}deg" aria-label="${item[1]}" onclick="setTab('${item[0]}')">${iconSvg(item[2],item[0]===active)}<span class="nav-label">${item[1]}</span></button>`).join('');
+  document.getElementById('ghosts').innerHTML=NAV.map(item=>`<div class="ghost-dot ${item[0]===active?'active':''}">${SECTIONS[item[0]].kicker}</div>`).join('');
+}
+
+function renderCopy(){
+  const all=lines(SECTIONS[active]);
+  const offset=offsets[active]||0;
+  const start=Math.floor(offset);
+  const fraction=offset-start;
+  let html='';
+  for(let i=0;i<17;i++){
+    const abs=start+i;
+    const text=all[abs]||'';
+    let cls='copy-line';
+    if(abs===0) cls+=' copy-heading-first';
+    if(abs===1) cls+=' copy-heading-title';
+    if(abs===2) cls+=' copy-sub';
+    if(text.startsWith('//')) cls+=' copy-note';
+    html+=`<div class="${cls}" style="top:${160+i*28}px;transform:translateY(${-fraction*28}px) rotate(${abs%2===0?'-.08deg':'.07deg'});opacity:${text?1:0}">${text}</div>`;
+  }
+  document.getElementById('copy').innerHTML=html;
+
+  const progress=maxOffset()?offset/maxOffset():1;
+  document.getElementById('progress').style.height=(progress*100)+'%';
+  document.getElementById('note').innerHTML=(NAV.find(item=>item[0]===active)?.[1]||'Home')+'<br>'+Math.round(progress*100)+'%';
+  document.getElementById('portrait').style.display=active==='about'?'block':'none';
+  document.querySelector('.stars').style.transform=`translate3d(${-14*progress}px,${8*progress}px,0)`;
+}
+
+function setTab(tab){
+  active=tab;
+  targets[tab]=0;
+  offsets[tab]=0;
+  renderNav();
+  renderCopy();
+}
+window.setTab=setTab;
+
+function animate(){
+  let keep=false;
+  const max=maxOffset();
+  const current=offsets[active]||0;
+  const target=clamp(targets[active]||0,0,max);
+  const next=Math.abs(target-current)<.001?target:current+(target-current)*.14;
+  if(Math.abs(target-next)>.001) keep=true;
+  offsets[active]=next;
+  renderCopy();
+  raf=keep?requestAnimationFrame(animate):null;
+}
+
+function startAnimation(){
+  if(!raf) raf=requestAnimationFrame(animate);
+}
+
+addEventListener('wheel',event=>{
+  event.preventDefault();
+  const multiplier=event.deltaMode===1?.9:event.deltaMode===2?3.2:.022;
+  targets[active]=clamp((targets[active]||0)+event.deltaY*multiplier,0,maxOffset());
+  startAnimation();
+},{passive:false});
+
+renderTorn();
+renderNav();
+document.getElementById('date').textContent=new Intl.DateTimeFormat('en-GB',{day:'2-digit',month:'short',year:'numeric',timeZone:'Asia/Kathmandu'}).format(new Date());
+renderCopy();
+</script>
+</body>
+</html>
